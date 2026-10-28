@@ -1,0 +1,6 @@
+Houses
+GET all houses
+Først skal frontenden ved en 'GET' funktion request data fra serveren på url endpointen https://localhost:3000/houses
+    det request bliver så kaldt på databasen ved brug a sql 
+IF der kommer en response fra databasen,skal der logges 200 (Alt ok), og retunere rows
+    ELLERS skal der logges 404 for fejl.
