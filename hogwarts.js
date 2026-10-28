@@ -1,5 +1,7 @@
-import * as housesRepository from "./repositories/houses.repository.js";
-import * as studentRepository from "./repositories/students.repository.js";
+import * as housesController from "./controllers/houses.controllers.js";
+import * as studentController from "./controllers/students.controllers.js";
+import * as teacherController from "./controllers/teachers.controllers.js";
+import * as coursesController from "./controllers/courses.controllers.js";
 
 import express from "express";
 
@@ -18,125 +20,44 @@ app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
 
-//--------- HOUSES BACKEND -------------/
+//--------- HOUSES -------------/
 
-app.get("/houses", async (req, res) => {
-  try {
-    const result = await housesRepository.getAllHouses();
-    // console.log(result);
-    if (result) {
-      res.status(200).json(result);
-    } else {
-      res.sendStatus(404);
-    }
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Database error", code: err.code });
-  }
-});
+app.get("/houses", housesController.getAllHouses);
 
-app.get("/houses/:id", async (req, res) => {
-  try {
-    const id = req.params.id;
-    const result = await housesRepository.getSingleHouse(id);
-    console.log(result);
-    if (result) {
-      res.status(200).json(result);
-    } else {
-      res.sendStatus(404);
-    }
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Database error", code: err.code });
-  }
-});
+app.get("/houses/:id", housesController.getSingleHouse);
 
-//--------- STUDENTS BACKEND -------------/
+//--------- STUDENTS -------------/
 
-app.get("/students", async (req, res) => {
-  try {
-    const students = await studentRepository.getAllStudents();
-    // console.log(result);
-    if (students) {
-      res.status(200).json(students);
-    } else {
-      res.sendStatus(404);
-    }
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Database error", code: err.code });
-  }
-});
+app.get("/students", studentController.getAllStudents);
 
-app.get("/students/:id", async (req, res) => {
-  try {
-    const id = req.params.id;
-    const student = await studentRepository.getSingleStudent(id);
+app.get("/students/:id", studentController.getSingleStudent);
 
-    if (student) {
-      res.status(200).json(student);
-    } else {
-      res.sendStatus(404);
-    }
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Database error", code: err.code });
-  }
-});
+app.post("/students", studentController.createStudent);
 
-app.post("/students", async (req, res) => {
-  try {
-    const name = "Ron Weasley";
-    const start_yr = 2014;
-    const house = 2;
+app.put("/students/:id", studentController.updateStudent);
 
-    const student = await studentRepository.createStudent(name, house, start_yr);
-    if (student) {
-      res.status(200).json(student);
-    } else {
-      res.sendStatus(404);
-    }
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Database error", code: err.code });
-  }
-});
+app.delete("/students/:id", studentController.deleteStudent);
 
-app.put("/students/:id", async (req, res) => {
-  try {
-    const name = "Brock Lesnar";
-    const start_yr = 2013;
-    const house = 3;
-    const id = req.params.id;
+//--------- TEACHERS -------------/
 
-    const student = await studentRepository.updateStudent(name, house, start_yr, id);
+app.get("/teachers", teacherController.getAllTeachers);
 
-    if (student) {
-      console.log(student);
+app.get("/teachers/:id", teacherController.getSingleTeacher);
 
-      res.status(200).json(student);
-    } else {
-      res.sendStatus(404);
-    }
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Database error", code: err.code });
-  }
-});
+app.post("/teachers", teacherController.createTeacher);
 
-app.delete("/students/:id", async (req, res) => {
-  try {
-    const id = req.params.id;
+app.put("/teachers/:id", teacherController.updateTeacher);
 
-    const student = await studentRepository.deleteStudent(id);
+app.delete("/teachers/:id", teacherController.deleteTeacher);
 
-    if (student) {
-      res.status(204).send();
-    } else {
-      res.sendStatus(404);
-    }
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Database error", code: err.code });
-  }
-});
+//--------- COURSES -------------/
+
+app.get("/courses", coursesController.getAllCourses);
+
+app.get("/courses/:id", coursesController.getSingleCourse);
+
+app.post("/courses", coursesController.createCourse);
+
+app.put("/courses/:id", coursesController.updateCourse);
+
+app.delete("/courses/:id", coursesController.deleteCourse);
