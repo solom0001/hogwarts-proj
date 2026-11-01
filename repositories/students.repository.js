@@ -55,7 +55,7 @@ export async function updateStudent(s_name, h_id, start_yr, id) {
         SET student_name =$1 ,house_id =$2 , start_year =$3
         WHERE id = $4
        RETURNING id, student_name, house_id, start_year;`,
-    [s_name, h_id, start_yr, id],
+    [s_name, h_id, start_yr, id],ww
   );
   if (one.rowCount === 0) {
     return null;

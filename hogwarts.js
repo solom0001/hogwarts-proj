@@ -1,7 +1,8 @@
-import * as housesController from "./controllers/houses.controllers.js";
-import * as studentController from "./controllers/students.controllers.js";
-import * as teacherController from "./controllers/teachers.controllers.js";
-import * as coursesController from "./controllers/courses.controllers.js";
+
+import housesRouter from "./routers/houses.routers.js";
+import studentsRouter from "./routers/students.routers.js";
+import coursesRouter from "./routers/courses.routers.js";
+import teachersRouter from "./routers/teachers.routers.js";
 
 import express from "express";
 
@@ -20,44 +21,9 @@ app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
 
-//--------- HOUSES -------------/
 
-app.get("/houses", housesController.getAllHouses);
+app.use(housesRouter);
+app.use(studentsRouter);
+app.use(coursesRouter);
+app.use(teachersRouter);
 
-app.get("/houses/:id", housesController.getSingleHouse);
-
-//--------- STUDENTS -------------/
-
-app.get("/students", studentController.getAllStudents);
-
-app.get("/students/:id", studentController.getSingleStudent);
-
-app.post("/students", studentController.createStudent);
-
-app.put("/students/:id", studentController.updateStudent);
-
-app.delete("/students/:id", studentController.deleteStudent);
-
-//--------- TEACHERS -------------/
-
-app.get("/teachers", teacherController.getAllTeachers);
-
-app.get("/teachers/:id", teacherController.getSingleTeacher);
-
-app.post("/teachers", teacherController.createTeacher);
-
-app.put("/teachers/:id", teacherController.updateTeacher);
-
-app.delete("/teachers/:id", teacherController.deleteTeacher);
-
-//--------- COURSES -------------/
-
-app.get("/courses", coursesController.getAllCourses);
-
-app.get("/courses/:id", coursesController.getSingleCourse);
-
-app.post("/courses", coursesController.createCourse);
-
-app.put("/courses/:id", coursesController.updateCourse);
-
-app.delete("/courses/:id", coursesController.deleteCourse);
