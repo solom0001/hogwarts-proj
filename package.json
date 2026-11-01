@@ -1,14 +1,14 @@
 {
-  "name": "hogwart",
+  "name": "hogwarts",
   "version": "1.0.0",
   "description": "",
   "license": "ISC",
   "author": "",
-  "type": "commonjs",
-  "main": "index.js",
+  "type": "module",
+  "main": "hogwarts.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node hogwart.js"
+    "start": "node hogwarts.js"
   },
   "dependencies": {
     "dotenv": "^17.4.2",

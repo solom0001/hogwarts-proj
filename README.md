@@ -1,82 +1,66 @@
-# hogwart
+# Hogwarts projekt
 
-A small Express + PostgreSQL API used in class. It serves a `books` table with
-GET / POST / PUT / DELETE endpoints.
+### 1.Semester Webudviklings projekt.
 
 ## Setup
 
-Do all four steps. Cloning the repo is not enough on its own - two of the
-things the app needs are deliberately **not** in the clone.
-
-### 1. Install the dependencies
+### 1. Installer dependencies
 
 ```bash
 npm install
 ```
 
-Do this even though a `node_modules` folder may already exist after cloning.
-Skipping it is the most common reason for `Cannot find module 'pg'` or
-`Cannot find module 'dotenv'`.
+### 2. Skab databasen
 
-### 2. Create the database and the table
+1. Skab databasen ved at lave en ny database i pgAdmin4 og kalde den for hogwarts.
+2. Højre klik på din database og åbn sql tool'en, derinde importere filen `hogwartsBackup.sql` som ligger i `database` mappen.
+3. Kører script filen ved at trykke på play knappen og refresh databasen.
 
-```bash
-psql -h 127.0.0.1 -U postgres -c "CREATE DATABASE bookshop"
-psql -h 127.0.0.1 -U postgres -d bookshop -f schema.sql
-```
+### 3. Sæt op `.env`
 
-Nothing creates the `bookshop` database for you. See `schema.sql` for the
-pgAdmin equivalent.
+Se `.env.example`
 
-### 3. Create your `.env`
-
-`.env` is gitignored, so **it is never part of the clone**. You have to make
-your own:
-
-```bash
-cp .env.example .env
-```
-
-Then open `.env` and put in your own Postgres password. Windows users: make
-sure the file is called exactly `.env` and not `.env.txt` - File Explorer hides
-the real extension by default.
-
-### 4. Run it
+### 4. Start server via:
 
 ```bash
 npm start
 ```
 
-Then open <http://localhost:3000/books>.
+## Endpoints
 
-## When it does not work
+### Houses
 
-Read the actual error in the terminal - it tells you which of the four steps
-you missed.
+| Method | Route       | Beskrivelse          |
+| ------ | ----------- | -------------------- |
+| GET    | /houses     | Hent alle houses     |
+| GET    | /houses/:id | Hent et enkelt house |
 
-| Error                                           | What it means                                                    |
-| ----------------------------------------------- | ---------------------------------------------------------------- |
-| `Cannot find module 'pg'` or `'dotenv'`         | Step 1 - run `npm install`                                       |
-| `database "bookshop" does not exist` (`3D000`)  | Step 2 - create the database                                     |
-| `relation "books" does not exist` (`42P01`)     | Step 2 - run `schema.sql`                                        |
-| `password authentication failed` (`28P01`)      | Step 3 - wrong password in `.env`                                |
-| `role "<your own username>" does not exist`     | Step 3 - **your `.env` is not being read**                       |
-| `database "<your own username>" does not exist` | Step 3 - same as above                                           |
-| `SASL: client password must be a string`        | Step 3 - `PGPASSWORD` is empty or missing                        |
-| `ECONNREFUSED`                                  | Postgres is not running, or is on a different port than `PGPORT` |
+### Students
 
-**If the error names your own computer username**, your `.env` is missing or is
-not being found. `dotenv` fails silently, and the app then falls back to
-connecting as your operating-system user. Two things to check:
+| Method | Route         | Beskrivelse               |
+| ------ | ------------- | ------------------------- |
+| GET    | /students     | Hent alle studerende      |
+| GET    | /students/:id | Hent en enkelt studerende |
+| POST   | /students     | Opret en ny studerende    |
+| PUT    | /students/:id | Opdater en studerende     |
+| DELETE | /students/:id | Slet en studerende        |
 
-- The file is in the project root and is named exactly `.env`.
-- You started the app from the project folder. `dotenv` looks for `.env` in the
-  directory you ran `npm start` **from**, not next to the source files.
+### Teachers
 
-To see what the app actually thinks it is connecting to:
+| Method | Route         | Beskrivelse          |
+| ------ | ------------- | -------------------- |
+| GET    | /teachers     | Hent alle lærere     |
+| GET    | /teachers/:id | Hent en enkelt lærer |
+| POST   | /teachers     | Opret en ny lærer    |
+| PUT    | /teachers/:id | Opdater en lærer     |
+| DELETE | /teachers/:id | Slet en lærer        |
 
-```bash
-node -e "require('dotenv').config();console.log({host:process.env.PGHOST,port:process.env.PGPORT,db:process.env.PGDATABASE,user:process.env.PGUSER,hasPassword:!!process.env.PGPASSWORD})"
-```
+### Courses
 
-Any `undefined` in that output means `.env` is not being read.
+| Method | Route        | Beskrivelse           |
+| ------ | ------------ | --------------------- |
+| GET    | /courses     | Hent alle courses     |
+| GET    | /courses/:id | Hent en enkelt course |
+| POST   | /courses     | Opret en ny course    |
+| PUT    | /courses/:id | Opdater en course     |
+| DELETE | /courses/:id | Slet en course        |
