@@ -28,6 +28,10 @@ npm start
 
 ## Endpoints
 
+Endpoint collections findes også i hogwarts-API-test mappen.
+
+Kør dem via Bruno extension i VScode.
+
 ### Houses
 
 | Method | Route       | Beskrivelse          |
